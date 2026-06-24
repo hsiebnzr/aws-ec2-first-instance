@@ -43,11 +43,13 @@ Auf der Instanz PowerShell als Administrator geöffnet und den Webserver install
 Install-WindowsFeature -name Web-Server -IncludeManagementTools
 ```
 
-![IIS Installation erfolgreich](screenshots/04-iis-installation-erfolg.png)
+[IIS Installation erfolgreich] 
+<img width="1918" height="985" alt="Image" src="https://github.com/user-attachments/assets/71033085-34ae-488c-990f-16b2bb9e4ca1" />
 
 Die Standard-Startseite von IIS war danach sofort über `localhost` erreichbar:
 
-![IIS Standardseite](screenshots/05-iis-standardseite.png)
+[IIS Standardseite]
+<img width="1913" height="1025" alt="Image" src="https://github.com/user-attachments/assets/f6c75049-6986-4382-845f-467cd2d1e7fe" />
 
 ### 3. Eigene Startseite erstellen
 
@@ -57,19 +59,22 @@ Damit es eine eigene Seite und nicht nur die Microsoft-Standardseite ist, wurde 
 Set-Content -Path "C:\inetpub\wwwroot\index.html" -Value "<html><body style='font-family:Arial;text-align:center;margin-top:100px'><h1>Hallo, das ist mein erstes AWS-Projekt</h1><p>EC2-Instanz mit IIS-Webserver, erstellt von Hsieb</p></body></html>"
 ```
 
-![Eigene Seite per Befehl erstellt](screenshots/06-eigene-seite-befehl.png)
+[Eigene Seite per Befehl erstellt] 
+<img width="1890" height="1029" alt="Image" src="https://github.com/user-attachments/assets/30265e5e-be8a-4e84-b118-8cbc9758fb37" />
 
 ### 4. Von außen erreichbar machen
 
 In der Security Group der Instanz eine Inbound-Regel für HTTP (Port 80) mit Quelle `0.0.0.0/0` hinzugefügt. Danach war die Seite nicht nur lokal auf der Instanz, sondern auch von einem ganz normalen Browser auf dem eigenen Rechner über die öffentliche IP erreichbar.
 
-![Öffentlicher Zugriff von außen](screenshots/07-oeffentlicher-zugriff.png)
+![Öffentlicher Zugriff von außen] 
+<img width="1919" height="1079" alt="Image" src="https://github.com/user-attachments/assets/3eede6de-50f4-4259-9454-a9f941c59845" />
 
 ### 5. Aufräumen
 
 Nach dem erfolgreichen Test wurde die Instanz zunächst gestoppt und der Status überprüft:
 
-![EC2 Dashboard, Instanz gestoppt](screenshots/03-ec2-dashboard-gestoppt.png)
+[EC2 Dashboard, Instanz gestoppt]
+<img width="1919" height="1079" alt="Image" src="https://github.com/user-attachments/assets/733c9193-5c07-4b93-b262-ab7c616efbe4" />
 
 Da die Instanz nicht mehr benötigt wurde, wurde sie anschließend vollständig terminiert (beendet), damit keine weiteren Kosten entstehen können.
 
