@@ -29,8 +29,11 @@ Mein erstes AWS-Projekt. Ziel war es, eine EC2-Instanz selbst zu erstellen, sich
 
 Über die EC2-Konsole eine Windows-Instanz erstellt und über den browserbasierten RDP-Client verbunden.
 
-![Verbindung aufbauen] <img width="1915" height="991" alt="Image" src="https://github.com/user-attachments/assets/79684d2a-e8f4-41af-a465-a55416d1f9c2" />
-![Erfolgreich verbunden] <img width="1919" height="1045" alt="Image" src="https://github.com/user-attachments/assets/61bff7be-9fca-404f-a9f4-1b351ac14d4f" />
+[Verbindung aufbauen] 
+<img width="1915" height="991" alt="Image" src="https://github.com/user-attachments/assets/79684d2a-e8f4-41af-a465-a55416d1f9c2" />
+
+[Erfolgreich verbunden] 
+<img width="1919" height="1045" alt="Image" src="https://github.com/user-attachments/assets/61bff7be-9fca-404f-a9f4-1b351ac14d4f" />
 
 ### 2. IIS-Webserver installieren
 
