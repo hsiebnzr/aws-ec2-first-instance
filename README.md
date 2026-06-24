@@ -1,94 +1,75 @@
-# aws-ec2-first-instance
-EC2 Windows-Instanz, erstes AWS-Projekt
+# Mein erstes AWS-Projekt: Eine eigene Webseite auf einer EC2-Instanz
 
-# EC2 Windows-Instanz mit IIS-Webserver
+Ich befinde mich gerade im Wechsel von einem Informatikstudium in eine duale IT-Ausbildung. Theorie allein hat mir nie gereicht, ich wollte schon immer lieber direkt ausprobieren, wie etwas funktioniert. AWS stand seit längerem auf meiner Liste, also habe ich mir vorgenommen, ein kleines, aber vollständiges Projekt durchzuziehen: eine eigene EC2-Instanz erstellen, einen Webserver installieren und am Ende eine eigene Seite wirklich aus dem Internet erreichbar machen. Hier ist, wie es gelaufen ist.
 
-Mein erstes AWS-Projekt. Ziel war es, eine EC2-Instanz selbst zu erstellen, sich per RDP zu verbinden, einen Webserver zu installieren und am Ende eine eigene Webseite öffentlich aus dem Internet erreichbar zu machen.
+## Schritt 1: Die Instanz erstellen und sich verbinden
 
-## Ziel
+Der erste Teil war reine Handarbeit in der AWS-Konsole: eine Windows-Instanz (t3.micro, Free Tier) anlegen und sich darüber per RDP-Client direkt im Browser verbinden, ganz ohne zusätzliche Software auf dem eigenen Rechner.
 
-- Eine EC2-Instanz (Windows Server) erstellen und sich per RDP verbinden
-- Auf der Instanz einen Webserver (IIS) installieren
-- Eine eigene, einfache HTML-Seite veröffentlichen
-- Die Seite von einem anderen Rechner aus über die öffentliche IP erreichbar machen
-- Die Instanz danach kontrolliert wieder schließen, um Kosten zu vermeiden
+[Verbindungsaufbau]
+<img width="1915" height="991" alt="Image" src="https://github.com/user-attachments/assets/66dfb950-503f-4c3f-8f9a-7fdcaf4e5293" />
 
-## Technische Details
+Kurz darauf stand die Verbindung, und ich konnte die Systeminformationen direkt auf dem Desktop der Instanz sehen, Hostname, Instance-ID, Instanzgröße und Availability Zone.
 
-| Eigenschaft | Wert |
-|---|---|
-| Instanztyp | t3.micro (Free Tier) |
-| Betriebssystem | Windows Server |
-| Region | us-east-1 (N. Virginia) |
-| Webserver | IIS (Internet Information Services) |
-| Verbindung | RDP über die AWS-Konsole |
+[Erfolgreich verbunden mit Systeminfo]
+<img width="1919" height="1045" alt="Image" src="https://github.com/user-attachments/assets/d0a34f9f-08f7-4368-a253-976f40d4f159" />
 
-## Vorgehen
+## Zwischenstopp: Kosten im Blick behalten
 
-### 1. Instanz erstellen und verbinden
+Bevor ich weitergemacht habe, habe ich die Instanz erstmal wieder gestoppt. Eine laufende Instanz kostet schließlich Geld, auch wenn man gerade nichts damit macht, und im Free Tier will ich erst recht nichts verschwenden. Im EC2-Dashboard ließ sich das gut kontrollieren.
 
-Über die EC2-Konsole eine Windows-Instanz erstellt und über den browserbasierten RDP-Client verbunden.
+[EC2-Dashboard, Instanz gestoppt]
+<img width="1918" height="985" alt="Image" src="https://github.com/user-attachments/assets/1fce4517-c5b4-4c1c-929b-c56a8026eb79" />
 
-[Verbindung aufbauen] 
-<img width="1915" height="991" alt="Image" src="https://github.com/user-attachments/assets/79684d2a-e8f4-41af-a465-a55416d1f9c2" />
+## Schritt 2: Einen Webserver installieren
 
-[Erfolgreich verbunden] 
-<img width="1919" height="1045" alt="Image" src="https://github.com/user-attachments/assets/61bff7be-9fca-404f-a9f4-1b351ac14d4f" />
-
-### 2. IIS-Webserver installieren
-
-Auf der Instanz PowerShell als Administrator geöffnet und den Webserver installiert:
+Beim nächsten Anlauf ging es ans Eigentliche. Ich habe mich wieder verbunden, PowerShell als Administrator geöffnet und mit einem einzigen Befehl den Windows-eigenen Webserver IIS installiert:
 
 ```powershell
 Install-WindowsFeature -name Web-Server -IncludeManagementTools
 ```
 
-[IIS Installation erfolgreich] 
-<img width="1918" height="985" alt="Image" src="https://github.com/user-attachments/assets/71033085-34ae-488c-990f-16b2bb9e4ca1" />
+Die Ausgabe zeigte "Success: True", die Installation war also durchgelaufen, ganz ohne Neustart.
 
-Die Standard-Startseite von IIS war danach sofort über `localhost` erreichbar:
+[IIS-Installation erfolgreich] 
+<img width="1913" height="1025" alt="Image" src="https://github.com/user-attachments/assets/45b4e00c-3681-42a0-ab61-35bc8700c3a2" />
 
-[IIS Standardseite]
-<img width="1913" height="1025" alt="Image" src="https://github.com/user-attachments/assets/f6c75049-6986-4382-845f-467cd2d1e7fe" />
+Ein Aufruf von `localhost` direkt auf der Instanz bestätigte, dass der Server lief. Windows Server bringt eine hübsche mehrsprachige Standardseite mit, die sofort erschien.
 
-### 3. Eigene Startseite erstellen
+[Standard-IIS-Seite]
+<img width="1890" height="1029" alt="Image" src="https://github.com/user-attachments/assets/f265f6d6-4b55-41dc-8473-779748a9689c" />
 
-Damit es eine eigene Seite und nicht nur die Microsoft-Standardseite ist, wurde eine eigene `index.html` direkt per PowerShell erzeugt:
+## Schritt 3: Eine eigene Seite veröffentlichen
+
+Die Standardseite war ein guter Beweis, dass alles läuft, aber ich wollte natürlich etwas Eigenes zeigen. Mit einem weiteren PowerShell-Befehl habe ich eine eigene `index.html` direkt in den Webserver-Ordner geschrieben:
 
 ```powershell
 Set-Content -Path "C:\inetpub\wwwroot\index.html" -Value "<html><body style='font-family:Arial;text-align:center;margin-top:100px'><h1>Hallo, das ist mein erstes AWS-Projekt</h1><p>EC2-Instanz mit IIS-Webserver, erstellt von Hsieb</p></body></html>"
 ```
 
-[Eigene Seite per Befehl erstellt] 
-<img width="1890" height="1029" alt="Image" src="https://github.com/user-attachments/assets/30265e5e-be8a-4e84-b118-8cbc9758fb37" />
+[Eigene Seite per Befehl erstellt]
+<img width="1919" height="1079" alt="Image" src="https://github.com/user-attachments/assets/24dff75e-15d4-49eb-a8d1-3cd36a17e88b" />
 
-### 4. Von außen erreichbar machen
+## Schritt 4: Der Moment der Wahrheit, Zugriff von außen
 
-In der Security Group der Instanz eine Inbound-Regel für HTTP (Port 80) mit Quelle `0.0.0.0/0` hinzugefügt. Danach war die Seite nicht nur lokal auf der Instanz, sondern auch von einem ganz normalen Browser auf dem eigenen Rechner über die öffentliche IP erreichbar.
+Lokal lief alles, aber der eigentliche Test war: Kann ich diese Seite auch von meinem eigenen Rechner aus aufrufen, über das echte Internet? Dafür musste ich in der Security Group der Instanz eine Inbound-Regel für HTTP (Port 80) öffnen.
 
-![Öffentlicher Zugriff von außen] 
-<img width="1919" height="1079" alt="Image" src="https://github.com/user-attachments/assets/3eede6de-50f4-4259-9454-a9f941c59845" />
+Und tatsächlich, beim Aufruf der öffentlichen IP-Adresse in meinem eigenen Browser erschien genau dieselbe Seite, die vorher nur lokal auf der Instanz zu sehen war.
 
-### 5. Aufräumen
+[Öffentlicher Zugriff von außen] 
+<img width="1919" height="1079" alt="Image" src="https://github.com/user-attachments/assets/077bf44d-ee88-4681-957b-ade22701cae8" />
 
-Nach dem erfolgreichen Test wurde die Instanz zunächst gestoppt und der Status überprüft:
+## Aufräumen
 
-[EC2 Dashboard, Instanz gestoppt]
-<img width="1919" height="1079" alt="Image" src="https://github.com/user-attachments/assets/733c9193-5c07-4b93-b262-ab7c616efbe4" />
+Nach dem erfolgreichen Test habe ich die Instanz vollständig terminiert, damit garantiert keine weiteren Kosten anfallen können. Die Inbound-Regel mit offenem Zugriff aus dem gesamten Internet braucht ja auch niemand dauerhaft.
 
-Da die Instanz nicht mehr benötigt wurde, wurde sie anschließend vollständig terminiert (beendet), damit keine weiteren Kosten entstehen können.
+## Was ich dabei gelernt habe
 
-## Ergebnis
+- Eine gestoppte Instanz kostet keine Rechenzeit mehr, die angehängte Festplatte aber schon, ein vollständiges Terminieren beendet wirklich alles
+- Ohne eine passende Inbound-Regel in der Security Group bleibt ein Webserver von außen unsichtbar, egal wie gut er lokal funktioniert
+- `localhost` bedeutet immer "dieser Rechner hier", für einen Test von außen braucht man stattdessen die öffentliche IP der Instanz
+- Ein offener Port 80 für die ganze Welt ist für einen kurzen Test in Ordnung, sollte danach aber wieder geschlossen werden
 
-Eine EC2-Instanz wurde von Grund auf erstellt, konfiguriert und mit einem funktionierenden Webserver ausgestattet. Die eigene Seite war am Ende sowohl lokal (`localhost`) als auch öffentlich über die Internet-IP der Instanz erreichbar.
+## Was als Nächstes kommt
 
-## Lessons Learned
-
-- Eine gestoppte EC2-Instanz verursacht keine Rechenkosten mehr, die angehängte EBS-Festplatte aber weiterhin geringe Kosten, solange sie existiert. Ein vollständiges Terminieren entfernt auch diese.
-- Sicherheitsgruppen steuern, welcher Netzwerkverkehr eine Instanz erreichen darf. Ohne eine passende Inbound-Regel für Port 80 bleibt ein Webserver von außen unerreichbar, selbst wenn er lokal funktioniert.
-- `localhost` bezieht sich immer auf den Rechner, auf dem man sich gerade befindet. Um eine Seite von außen zu testen, braucht man die öffentliche IP der Instanz, nicht `localhost`.
-- Ein offener Port 80 mit Quelle `0.0.0.0/0` ist für einen kurzen Test unkritisch, sollte aber nach dem Test wieder geschlossen oder die Instanz gestoppt werden, um die Angriffsfläche gering zu halten.
-
-## Hinweis zu Screenshots
-
-Sensible Informationen wie Passwörter, AWS Account-IDs und öffentliche IP-Adressen wurden auf den Screenshots vor der Veröffentlichung unkenntlich gemacht.
+Dieses Projekt war mein Einstieg in AWS. Als Nächstes will ich mir S3 Static Website Hosting anschauen und mit IAM-Usern statt dem Root-Account arbeiten. Schritt für Schritt, genau wie bei diesem ersten Projekt.
