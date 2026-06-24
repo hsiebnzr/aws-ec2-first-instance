@@ -14,13 +14,6 @@ Kurz darauf stand die Verbindung, und ich konnte die Systeminformationen direkt 
 [Erfolgreich verbunden mit Systeminfo]
 <img width="1919" height="1045" alt="Image" src="https://github.com/user-attachments/assets/d0a34f9f-08f7-4368-a253-976f40d4f159" />
 
-## Zwischenstopp: Kosten im Blick behalten
-
-Bevor ich weitergemacht habe, habe ich die Instanz erstmal wieder gestoppt. Eine laufende Instanz kostet schließlich Geld, auch wenn man gerade nichts damit macht, und im Free Tier will ich erst recht nichts verschwenden. Im EC2-Dashboard ließ sich das gut kontrollieren.
-
-[EC2-Dashboard, Instanz gestoppt]
-<img width="1918" height="985" alt="Image" src="https://github.com/user-attachments/assets/1fce4517-c5b4-4c1c-929b-c56a8026eb79" />
-
 ## Schritt 2: Einen Webserver installieren
 
 Beim nächsten Anlauf ging es ans Eigentliche. Ich habe mich wieder verbunden, PowerShell als Administrator geöffnet und mit einem einzigen Befehl den Windows-eigenen Webserver IIS installiert:
@@ -58,10 +51,6 @@ Und tatsächlich, beim Aufruf der öffentlichen IP-Adresse in meinem eigenen Bro
 
 [Öffentlicher Zugriff von außen] 
 <img width="1919" height="1079" alt="Image" src="https://github.com/user-attachments/assets/077bf44d-ee88-4681-957b-ade22701cae8" />
-
-## Aufräumen
-
-Nach dem erfolgreichen Test habe ich die Instanz vollständig terminiert, damit garantiert keine weiteren Kosten anfallen können. Die Inbound-Regel mit offenem Zugriff aus dem gesamten Internet braucht ja auch niemand dauerhaft.
 
 ## Was ich dabei gelernt habe
 
