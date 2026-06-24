@@ -58,7 +58,3 @@ Und tatsächlich, beim Aufruf der öffentlichen IP-Adresse in meinem eigenen Bro
 - Ohne eine passende Inbound-Regel in der Security Group bleibt ein Webserver von außen unsichtbar, egal wie gut er lokal funktioniert
 - `localhost` bedeutet immer "dieser Rechner hier", für einen Test von außen braucht man stattdessen die öffentliche IP der Instanz
 - Ein offener Port 80 für die ganze Welt ist für einen kurzen Test in Ordnung, sollte danach aber wieder geschlossen werden
-
-## Was als Nächstes kommt
-
-Dieses Projekt war mein Einstieg in AWS. Als Nächstes will ich mir S3 Static Website Hosting anschauen und mit IAM-Usern statt dem Root-Account arbeiten. Schritt für Schritt, genau wie bei diesem ersten Projekt.
